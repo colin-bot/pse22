@@ -34,7 +34,8 @@ def add_message_to_chat():
     time = str(dt.datetime.strptime(data['time'], '%d/%m/%Y %H:%M:%S'))
 
     if message == '/clear':
-        chats[chat_id].message_list.clear()
+        chats[chat_id].message_list = []
+        return ''
 
     chats[chat_id].create_message(user_id, time, message)
 
