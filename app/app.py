@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 chats = {'0': Chat(0)}
 
+
 @app.route('/')
 def index():
     return 'Welcome on home'
@@ -19,9 +20,9 @@ def get_chat(meeting_id):
         print(f'Tried to access {meeting_id}')
         return abort(404)
 
-
     # formaat voor json (datetime, message_id, user_id, message)
     return json.dumps(chats[meeting_id].get_dictionary())
+
 
 @app.route('/send_message', methods=['PUT'])
 def add_message_to_chat():
@@ -32,10 +33,14 @@ def add_message_to_chat():
     message = data['message']
     time = str(dt.datetime.strptime(data['time'], '%d/%m/%Y %H:%M:%S'))
 
+    if message == '/clear':
+        chats[chat_id].message_list.clear()
+
     chats[chat_id].create_message(user_id, time, message)
 
     print(chats[chat_id].message_list)
 
     return ''
+
 
 # app.run(ssl_context='adhoc')
