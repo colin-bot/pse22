@@ -38,4 +38,4 @@ def add_message_to_chat():
 
     return ''
 
-app.run()
+app.run(ssl_context='adhoc')
